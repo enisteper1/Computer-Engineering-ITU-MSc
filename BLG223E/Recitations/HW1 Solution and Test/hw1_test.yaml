@@ -1,0 +1,68 @@
+- init:
+    run: rm -f /bin/main
+    blocker: true
+
+- build1:
+    ##run: g++ -Wall -Werror src/main.cpp src/pokemon.cpp -I include -o hw1 -lm
+    run: g++ -Wall -Werror -g src/main.cpp src/ProcessRep.cpp src/FIFORep.cpp src/SchedulerRep.cpp src/CPURep.cpp -I include -o bin/main
+    exit: 0
+    points: 1
+    blocker: false
+
+- build2:
+    ##run: g++ -Wall -Werror src/main.cpp src/pokemon.cpp -I include -o hw1 -lm
+    run: g++ -g src/main.cpp src/ProcessRep.cpp src/FIFORep.cpp src/SchedulerRep.cpp src/CPURep.cpp -I include -o bin/main
+    exit: 0
+    points: 1
+    blocker: true
+
+- case_1:
+    run: ./bin/main case1.txt
+    script:
+      - expect: "RP: A2 WP: A3 -1 -1 A1 0 -1 FP: RP: A3 WP: A1 0 -1 A2 2 -1 FP: RP: A1 WP: A2 2 -1 A3 4 -1 FP: RP: A2 WP: A3 4 -1 A1 0 -1 FP: RP: A3 WP: A1 0 -1 A2 2 -1 FP: RP: A2 WP: A3 4 -1 FP: A1 0 14 RP: A3 WP: FP: A1 0 14 A2 2 16 RP: WP: FP: A1 0 14 A2 2 16 A3 4 18 "
+    exit: 0
+    points: 0.34
+
+- case_2:
+    run: ./bin/main case2.txt
+    script:
+      - expect: "RP: B1 WP: B2 -1 -1 B3 -1 -1 FP: RP: B2 WP: B3 -1 -1 B1 0 -1 FP: RP: B3 WP: B1 0 -1 B2 4 -1 FP: RP: B1 WP: B2 4 -1 B3 8 -1 FP: RP: B2 WP: B3 8 -1 B1 0 -1 FP: RP: B3 WP: B1 0 -1 B2 4 -1 FP: RP: B2 WP: B3 8 -1 FP: B1 0 28 RP: B3 WP: FP: B1 0 28 B2 4 32 RP: WP: FP: B1 0 28 B2 4 32 B3 8 36 "
+    exit: 0
+    points: 0.33
+
+- case_3:
+    run: ./bin/main case3.txt
+    script:
+      - expect: "RP: C1 WP: C2 -1 -1 C3 -1 -1 FP: RP: C2 WP: C3 -1 -1 C1 0 -1 FP: RP: C3 WP: C1 0 -1 C2 8 -1 FP: RP: C2 WP: C3 16 -1 FP: C1 0 32 RP: C3 WP: FP: C1 0 32 C2 8 40 RP: WP: FP: C1 0 32 C2 8 40 C3 16 48 "
+    exit: 0
+    points: 0.33
+
+- case_4:
+    run: ./bin/main case4.txt
+    script:
+      - expect: "RP: A1 WP: B1 5 -1 C1 0 -1 FP: RP: A1 WP: B1 5 -1 C1 0 -1 FP: RP: A1 WP: B1 5 -1 C1 0 -1 FP: RP: B1 WP: C1 0 -1 FP: A1 7 19 RP: B1 WP: C1 0 -1 FP: A1 7 19 RP: B1 WP: C1 0 -1 FP: A1 7 19 RP: C1 WP: FP: A1 7 19 B1 5 29 RP: WP: FP: A1 7 19 B1 5 29 C1 0 36 "
+    exit: 0
+    points: 1
+
+- case_5:
+    run: ./bin/main case5.txt
+    script:
+      - expect: "RP: C1 WP: FP: RP: C1 WP: C2 -1 -1 FP: RP: C2 WP: C3 -1 -1 FP: C1 0 8 RP: C3 WP: C2 8 -1 C4 -1 -1 FP: C1 0 8 RP: B1 WP: C4 -1 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 RP: B1 WP: B2 -1 -1 C4 -1 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 RP: B2 WP: B3 -1 -1 C4 -1 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 RP: B4 WP: C3 16 -1 C2 8 -1 C4 85 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 RP: B5 WP: C2 8 -1 C4 85 -1 C3 16 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 RP: B6 WP: C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 RP: A1 WP: B6 150 -1 C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 RP: A2 WP: A1 160 -1 B6 150 -1 C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 RP: A2 WP: A1 160 -1 A3 -1 -1 B6 150 -1 C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 RP: A1 WP: A3 -1 -1 A2 164 -1 B6 150 -1 C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 RP: A3 WP: A2 164 -1 A1 160 -1 B6 150 -1 C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 RP: A3 WP: A2 164 -1 B6 150 -1 C4 85 -1 C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 A1 160 178 RP: C4 WP: C3 16 -1 C2 8 -1 FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 A1 160 178 A2 164 186 A3 172 190 B6 150 210 RP: WP: FP: C1 0 8 B1 25 49 B2 41 69 B3 61 85 B4 90 120 B5 120 150 A1 160 178 A2 164 186 A3 172 190 B6 150 210 C2 8 233 C4 85 240 C3 16 244 "
+    exit: 0
+    points: 1  
+
+- case_6:
+    run: valgrind --leak-check=full ./bin/main case6.txt
+    script:
+      - expect: '(.*)All heap blocks were freed -- no leaks are possible(.*)'
+    exit: 0
+    points: 1 
+
+- case_7:
+    run: valgrind --leak-check=full ./bin/main case6.txt
+    script:
+      - expect: "RP: WP: FP: C1 0 8 C2 8 16 C3 16 24 C4 24 32 B1 36 40 B2 40 44 B3 44 48 B4 48 52 B5 52 56 B6 56 60 B7 60 64 B8 64 68 B9 68 72 A1 74 76 A2 76 78 A3 78 80 A4 80 82 A5 82 84 A6 84 86 A7 86 88 A8 88 90 A9 90 92 A10 92 94 A11 94 96 A12 96 98 A13 98 100 A14 100 102 A15 102 104 A16 104 106 A17 106 108 A18 108 110 A19 110 112 A20 112 114 A21 114 116 A22 116 118 A23 118 120 A24 120 122 A25 122 124 A26 124 126 A27 126 128 A28 128 130 A29 130 132 A30 132 134 A31 134 136 A32 136 138 A33 138 140 A34 140 142 A35 142 144 B11 144 148 B12 148 152 B13 152 156 B14 156 160 B15 160 164 B16 164 168 B17 168 172 B18 172 176 B19 176 180 B20 180 184 B21 184 188 B22 188 192 B23 192 196 B24 196 200 B25 200 204 B26 204 208 B27 208 212 B28 212 216 B29 216 220 B30 220 224 B31 224 228 B32 228 232 B33 232 236 B34 236 240 B35 240 244 B36 244 248 B37 248 252 B38 252 256 B10 72 258 C6 258 266 C7 266 274 C8 274 282 C9 282 290 C10 290 298 C11 298 306 C12 306 314 C13 314 322 C14 322 330 C15 330 338 C16 338 346 C17 346 354 C18 354 362 C19 362 370 C20 370 378 C21 378 386 C22 386 394 C23 394 402 C24 402 410 C25 410 418 C26 418 426 C27 426 434 C28 434 442 C29 442 450 C30 450 458 C31 458 466 C32 466 474 C33 474 482 C34 482 490 C35 490 498 C36 498 506 C5 32 510 "
+      # - expect: '(.*)All heap blocks were freed -- no leaks are possible(.*)'
+    exit: 0
+    points: 3 
+

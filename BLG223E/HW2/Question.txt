@@ -1,0 +1,2 @@
+These are pangram sentences which include all letters of alphabet at least once.
+Since they include all letters it enables us to encode which sentence we want.
